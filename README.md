@@ -15,4 +15,8 @@
 
 ### Task 03: Constants & Slab Billing Logic
 - **Compilation**: `gcc -o task3 Task03/task03.c`
-- **Execution**: `./task3` (or `task3
+- **Execution**: `./task3` (or `task3.exe` on Windows)
+
+### Task 04: Safe Macros & Preprocessor
+- **Compilation**: `gcc -o task4 Task04/task04.c`
+- **Execution**: `./task4` (or `task4.exe` on Windows)
