@@ -1,6 +1,7 @@
 **Name:** P.M.Dariga
 **Reg No:** 1965260176
 **Course:** Computer Networks
+**Course code:** CSA0211
 **Compiler Version:** gcc (GCC) 13.x
 
 # CSA02 Assignment 1: Reliable Billing Program for a Rural Electricity Co-operative
