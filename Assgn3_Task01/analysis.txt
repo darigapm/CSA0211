@@ -1,0 +1,82 @@
+Grama Jyothi Rural Electricity Co-operative - System Analysis
+- Inputs: previous_reading (unsigned short), current_reading (unsigned short), household_id
+- Outputs: units_consumed (unsigned int), energy_charge_paise (long), fixed_charge_paise (long), total_bill_paise (long)
+- Constants: FIXED_CHARGE_PAISE (5000L), SLAB1_UNITS (100), SLAB2_UNITS (200), RATE2_PAISE (225), RATE3_PAISE (450)
+- Rules: Total bill >= 50.00 Rs; no negative billing; roll-over arithmetic handled via unsigned short subtraction.
+```[cite: 8, 9]
+
+---
+
+### 2. `Assgn3_Task02/main.c`
+Paste the rollover-safe meter calculation code:
+```c
+#include <stdio.h>
+#include <limits.h>
+
+typedef unsigned short meter_t;
+
+meter_t consumption(meter_t previous, meter_t current) {
+    return (current - previous);
+}
+
+int main(void) {
+    printf("sizeof(meter_t) = %zu bytes, maximum reading = %u\n", sizeof(meter_t), (unsigned)USHRT_MAX);
+    printf("Consumption: %u units\n", consumption(1200, 1530));
+    printf("Consumption: %u units\n", consumption(65400, 120));
+    return 0;
+}
+```[cite: 8, 10]
+
+---
+
+### 3. `Assgn3_Task03/main.c`
+Paste the centralized tariff macros code:
+```c
+#include <stdio.h>
+
+#define SLAB1_UNITS 100
+#define SLAB2_UNITS 200
+#define RATE1_PAISE 0
+#define RATE2_PAISE 225
+#define RATE3_PAISE 450
+#define FIXED_CHARGE_PAISE 5000L
+
+long compute_bill(int units) {
+    long paise = FIXED_CHARGE_PAISE;
+    if (units > SLAB2_UNITS) {
+        paise += (long)(units - SLAB2_UNITS) * RATE3_PAISE + (SLAB2_UNITS - SLAB1_UNITS) * RATE2_PAISE;
+    } else if (units > SLAB1_UNITS) {
+        paise += (long)(units - SLAB1_UNITS) * RATE2_PAISE;
+    }
+    return paise;
+}
+
+int main(void) {
+    int tests[] = {0, 100, 150, 200, 350};
+    int n = sizeof(tests) / sizeof(tests[0]);
+    for (int i = 0; i < n; i++) {
+        long p = compute_bill(tests[i]);
+        printf("%3d units -> Rs %ld.%02ld\n", tests[i], p / 100, p % 100);
+    }
+    return 0;
+}
+```[cite: 8, 11, 12]
+
+---
+
+### 4. `Assgn3_Task04/main.c`
+Paste the safe macros code:
+```c
+#include <stdio.h>
+
+#define RUPEES_TO_PAISE(r) ((long)((r) * 100))
+#define MAX(a, b) ((a) > (b) ? (a) : (b))
+#define SQUARE(x) ((x) * (x))
+
+int main(void) {
+    printf("Rs 150.50 in paise: %ld\n", RUPEES_TO_PAISE(150.5));
+    printf("MAX(10, 25) = %d\n", MAX(10, 25));
+    printf("SQUARE(5 + 1) = %d\n", SQUARE(5 + 1));
+    return 0;
+}
+```[cite: 8, 12, 13]
