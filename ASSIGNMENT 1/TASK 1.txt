@@ -1,0 +1,29 @@
+TASK 1: UNDERSTAND THE PROBLEM AND IDENTIFY THE DATA
+
+1. Analysis of Inputs, Outputs, Constants, and Rules:
+- Inputs: 
+  * previous_reading (unsigned 16-bit integer representing the previous meter reading)
+  * current_reading (unsigned 16-bit integer representing the current meter reading)
+  * household_number (unique identifier for the household)
+  * category (billing category, e.g., domestic/commercial)
+- Outputs:
+  * units consumed (calculated consumption integer)
+  * energy_charge (calculated cost based on slabs in paise)
+  * fixed_charge (fixed standard charge of Rs 50.00 / 5000 paise)
+  * total_bill (sum of energy charge and fixed charge)
+- Constants:
+  * Fixed Charge = Rs 50.00 (5000 paise)
+  * Slab 1 Limit = 100 units (Free / Rate 0)
+  * Slab 2 Limit = 200 units (Rate Rs 2.25 per unit = 225 paise)
+  * Slab 3 Rate = Rs 4.50 per unit = 450 paise (for units above 200)
+- Rules & Invariants:
+  * Total bill must always equal fixed charge plus energy charge.
+  * Bills can never be negative.
+  * 16-bit register rollover handling: if current reading is less than previous reading, unsigned 16-bit subtraction handles the wrap-around automatically (mod 65536).
+- Assumptions:
+  * Consumption does not exceed 65,535 units in a single billing cycle (single rollover).
+
+2. Alternative Concept & Complexity Analysis:
+- If meter readings were stored as text strings (e.g., "01530") instead of integers:
+  * Conversion Cost: Storing as strings requires O(d) time to parse characters into numeric values during computation, where d is the number of digits. Integers allow direct O(1) arithmetic.
+  * Space Complexity: A text string like "01530" takes 6 bytes (5 digits + null terminator), whereas a 16-bit integer takes only 2 bytes. Storing as integers saves about 66.7% of storage space.
